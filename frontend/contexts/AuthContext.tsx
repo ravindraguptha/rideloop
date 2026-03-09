@@ -8,6 +8,10 @@ interface User {
   id: string;
   name: string;
   phone: string;
+  gender?: string;
+  role?: string;
+  women_only_preference?: boolean;
+  kyc_verified?: boolean;
 }
 
 interface AuthContextType {
@@ -16,6 +20,7 @@ interface AuthContextType {
   login: (phone: string, password: string) => Promise<void>;
   signup: (name: string, phone: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  updateUser: (userData: Partial<User>) => void;
   isLoading: boolean;
 }
 
