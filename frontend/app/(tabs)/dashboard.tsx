@@ -51,6 +51,7 @@ export default function DashboardScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [activeTab, setActiveTab] = useState<'created' | 'joined'>('created');
   const { token } = useAuth();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     fetchMyRides();
