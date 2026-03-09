@@ -19,29 +19,7 @@ import { Colors } from '../../constants/Colors';
 
 const API_URL = Constants.expoConfig?.extra?.EXPO_BACKEND_URL || '';
 
-const LOCATIONS = [
-  'All',
-  'Gachibowli',
-  'Hitech City',
-  'Madhapur',
-  'Kukatpally',
-  'Ameerpet',
-  'Banjara Hills',
-  'Jubilee Hills',
-  'Begumpet',
-  'Secunderabad',
-  'Kondapur',
-  'Miyapur',
-  'LB Nagar',
-  'Uppal',
-  'Dilsukhnagar',
-  'Charminar',
-  'Mehdipatnam',
-  'Tarnaka',
-  'Koti',
-  'Somajiguda',
-  'Nagole',
-];
+const LOCATIONS = HYDERABAD_LOCATIONS;
 
 interface Ride {
   id: string;
