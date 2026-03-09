@@ -21,6 +21,9 @@ class RideLoopTester:
         self.user1_token = None
         self.user2_token = None
         self.test_ride_id = None
+        self.timestamp = str(int(time.time()))
+        self.user1_phone = f"987654{self.timestamp[-4:]}"
+        self.user2_phone = f"876543{self.timestamp[-4:]}"
         
     def log_result(self, test_name, success, message, details=None):
         """Log test results"""
