@@ -130,12 +130,9 @@ class RideLoopTester:
         """Test user login"""
         print("\n=== Testing User Login ===")
         
-        # Get timestamp for consistent phone numbers
-        timestamp = str(int(time.time()))
-        
         # Test 1: Valid login
         login_data = {
-            "phone": f"987654{timestamp[-4:]}",
+            "phone": self.user1_phone,
             "password": "securepass123"
         }
         
