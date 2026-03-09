@@ -103,7 +103,11 @@ export default function HomeScreen() {
 
   const handleJoinRide = async (rideId: string) => {
     if (!token) {
-      Alert.alert('Error', 'Please login to join rides');
+      Toast.show({
+        type: 'error',
+        text1: 'Authentication Required',
+        text2: 'Please login to join rides',
+      });
       return;
     }
 
@@ -123,14 +127,26 @@ export default function HomeScreen() {
               });
 
               if (response.ok) {
-                Alert.alert('Success', 'Successfully joined the ride!');
+                Toast.show({
+                  type: 'success',
+                  text1: 'Request Sent!',
+                  text2: 'Ride request sent successfully',
+                });
                 fetchRides();
               } else {
                 const error = await response.json();
-                Alert.alert('Error', error.detail || 'Failed to join ride');
+                Toast.show({
+                  type: 'error',
+                  text1: 'Error',
+                  text2: error.detail || 'Failed to join ride',
+                });
               }
             } catch (error) {
-              Alert.alert('Error', 'Failed to join ride');
+              Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Failed to join ride',
+              });
             }
           },
         },
