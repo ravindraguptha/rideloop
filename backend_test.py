@@ -100,7 +100,7 @@ class RideLoopTester:
         # Test 2: Valid signup for user 2
         user2_data = {
             "name": "Mike Chen",
-            "phone": "8765432109",
+            "phone": f"876543{timestamp[-4:]}",
             "password": "mypassword456"
         }
         
