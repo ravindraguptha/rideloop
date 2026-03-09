@@ -189,10 +189,15 @@ async def get_profile(token: str):
 async def create_ride(ride: RideCreate, token: str):
     user = await get_current_user(token)
     
+    # Check if user's role is Driver
+    if user.get("role") != "Driver":
+        raise HTTPException(status_code=400, detail="Only drivers can create rides")
+    
     ride_doc = {
         "creator_id": str(user["_id"]),
         "creator_name": user["name"],
         "creator_phone": user["phone"],
+        "creator_gender": user.get("gender"),
         "start_location": ride.start_location,
         "destination": ride.destination,
         "date": ride.date,
@@ -201,6 +206,7 @@ async def create_ride(ride: RideCreate, token: str):
         "total_seats": ride.available_seats,
         "price_per_seat": ride.price_per_seat,
         "status": "active",
+        "women_only": user.get("women_only_preference", False),
         "created_at": datetime.utcnow()
     }
     result = await db.rides.insert_one(ride_doc)
