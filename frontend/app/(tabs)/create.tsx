@@ -16,31 +16,13 @@ import Constants from 'expo-constants';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+import { HYDERABAD_LOCATIONS } from '../../constants/Locations';
+import { Colors } from '../../constants/Colors';
 
 const API_URL = Constants.expoConfig?.extra?.EXPO_BACKEND_URL || '';
 
-const LOCATIONS = [
-  'Gachibowli',
-  'Hitech City',
-  'Madhapur',
-  'Kukatpally',
-  'Ameerpet',
-  'Banjara Hills',
-  'Jubilee Hills',
-  'Begumpet',
-  'Secunderabad',
-  'Kondapur',
-  'Miyapur',
-  'LB Nagar',
-  'Uppal',
-  'Dilsukhnagar',
-  'Charminar',
-  'Mehdipatnam',
-  'Tarnaka',
-  'Koti',
-  'Somajiguda',
-  'Nagole',
-];
+const LOCATIONS = HYDERABAD_LOCATIONS.filter(loc => loc !== 'All');
 
 export default function CreateRideScreen() {
   const [startLocation, setStartLocation] = useState(LOCATIONS[0]);
