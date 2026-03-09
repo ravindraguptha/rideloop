@@ -321,18 +321,23 @@ async def join_ride(ride_id: str, join_data: JoinRide, token: str):
 async def get_my_rides(token: str):
     user = await get_current_user(token)
     user_id = str(user["_id"])
+    user_role = user.get("role", "Passenger")
     
-    # Get created rides
+    # Get created rides (for drivers)
     created_rides = await db.rides.find({"creator_id": user_id}).sort("created_at", -1).to_list(100)
     created = []
     for ride in created_rides:
-        # Get bookings for this ride
-        bookings = await db.bookings.find({"ride_id": str(ride["_id"]), "status": "confirmed"}).to_list(100)
+        # Get accepted bookings for this ride
+        bookings = await db.bookings.find({"ride_id": str(ride["_id"]), "status": "accepted"}).to_list(100)
         passengers = [{
             "name": b["user_name"],
             "phone": b["user_phone"],
-            "seats": b["seats_booked"]
+            "seats": b["seats_booked"],
+            "gender": b.get("user_gender")
         } for b in bookings]
+        
+        # Get pending requests count
+        pending_count = await db.bookings.count_documents({"ride_id": str(ride["_id"]), "status": "pending"})
         
         created.append({
             "id": str(ride["_id"]),
@@ -344,11 +349,12 @@ async def get_my_rides(token: str):
             "total_seats": ride["total_seats"],
             "price_per_seat": ride["price_per_seat"],
             "status": ride["status"],
-            "passengers": passengers
+            "passengers": passengers,
+            "pending_requests": pending_count
         })
     
-    # Get joined rides
-    bookings = await db.bookings.find({"user_id": user_id, "status": "confirmed"}).to_list(100)
+    # Get joined/requested rides (for passengers)
+    bookings = await db.bookings.find({"user_id": user_id, "status": {"$in": ["pending", "accepted"]}}).to_list(100)
     joined = []
     for booking in bookings:
         ride = await db.rides.find_one({"_id": ObjectId(booking["ride_id"])})
@@ -357,13 +363,16 @@ async def get_my_rides(token: str):
                 "id": str(ride["_id"]),
                 "creator_name": ride["creator_name"],
                 "creator_phone": ride["creator_phone"],
+                "creator_gender": ride.get("creator_gender"),
                 "start_location": ride["start_location"],
                 "destination": ride["destination"],
                 "date": ride["date"],
                 "time": ride["time"],
                 "seats_booked": booking["seats_booked"],
                 "price_per_seat": ride["price_per_seat"],
-                "status": ride["status"]
+                "status": ride["status"],
+                "booking_status": booking["status"],
+                "is_women_driver": ride.get("creator_gender") == "Female"
             })
     
     return {
