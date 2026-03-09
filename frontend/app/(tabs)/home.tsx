@@ -269,10 +269,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterSection: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: Colors.border,
   },
   pickerContainer: {
     marginBottom: 12,
