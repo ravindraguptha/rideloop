@@ -110,19 +110,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    padding: 16,
   },
   profileCard: {
     backgroundColor: '#fff',
-    borderRadius: 12,
     padding: 24,
     alignItems: 'center',
     marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   avatar: {
     width: 80,
@@ -147,12 +140,30 @@ const styles = StyleSheet.create({
   phone: {
     fontSize: 16,
     color: '#666',
-    marginBottom: 24,
+    marginBottom: 12,
+  },
+  kycBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e8f5e9',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    marginBottom: 16,
+  },
+  kycText: {
+    color: '#4CAF50',
+    fontSize: 14,
+    fontWeight: '600',
+    marginLeft: 4,
   },
   infoSection: {
+    flexDirection: 'row',
     width: '100%',
+    gap: 12,
   },
   infoCard: {
+    flex: 1,
     backgroundColor: '#f9f9f9',
     padding: 16,
     borderRadius: 8,
@@ -168,28 +179,34 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#333',
   },
-  section: {
+  menuSection: {
     backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 20,
     marginBottom: 16,
   },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+    minHeight: 60,
   },
-  sectionText: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
+  menuItemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
+  menuItemText: {
+    fontSize: 16,
+    color: '#333',
   },
   logoutButton: {
     backgroundColor: '#f44336',
     padding: 18,
     borderRadius: 8,
     alignItems: 'center',
+    margin: 16,
     minHeight: 56,
     justifyContent: 'center',
   },
