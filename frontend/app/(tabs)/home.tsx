@@ -61,6 +61,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const { token } = useAuth();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     fetchRides();
