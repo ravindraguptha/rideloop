@@ -121,6 +121,10 @@ async def signup(user: UserSignup):
         "name": user.name,
         "phone": user.phone,
         "password_hash": hash_password(user.password),
+        "gender": None,
+        "role": "Passenger",
+        "women_only_preference": False,
+        "kyc_verified": False,
         "created_at": datetime.utcnow()
     }
     result = await db.users.insert_one(user_doc)
@@ -133,7 +137,11 @@ async def signup(user: UserSignup):
         "user": {
             "id": str(result.inserted_id),
             "name": user.name,
-            "phone": user.phone
+            "phone": user.phone,
+            "gender": None,
+            "role": "Passenger",
+            "women_only_preference": False,
+            "kyc_verified": False
         }
     }
 
