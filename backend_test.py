@@ -73,9 +73,10 @@ class RideLoopTester:
         print("\n=== Testing User Signup ===")
         
         # Test 1: Valid signup for user 1
+        timestamp = str(int(time.time()))
         user1_data = {
             "name": "Sarah Johnson",
-            "phone": "9876543210",
+            "phone": f"987654{timestamp[-4:]}",
             "password": "securepass123"
         }
         
