@@ -1,13 +1,16 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "RideLoop",
+    "slug": "rideloop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "rideloop",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "extra": {
+      "EXPO_BACKEND_URL": "https://rideloop-app.preview.emergentagent.com"
+    },
     "ios": {
       "supportsTablet": true
     },
