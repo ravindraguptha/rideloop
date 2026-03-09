@@ -222,13 +222,13 @@ export default function CreateRideScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: Colors.backgroundSecondary,
   },
   scrollContent: {
     padding: 16,
   },
   form: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.card,
     borderRadius: 12,
     padding: 20,
   },
@@ -238,29 +238,30 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333',
+    color: Colors.text,
     marginBottom: 8,
   },
   pickerWrapper: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: Colors.border,
     borderRadius: 8,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: Colors.white,
   },
   picker: {
     height: 50,
   },
   input: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: Colors.border,
     borderRadius: 8,
     padding: 16,
     fontSize: 16,
     minHeight: 56,
+    color: Colors.text,
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.primary,
     padding: 18,
     borderRadius: 8,
     alignItems: 'center',
@@ -272,7 +273,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   buttonText: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 18,
     fontWeight: 'bold',
   },
