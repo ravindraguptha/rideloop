@@ -184,6 +184,7 @@ export default function HomeScreen() {
 
       <ScrollView
         style={styles.ridesList}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 70 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#4CAF50']} />
         }
