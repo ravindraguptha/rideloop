@@ -122,7 +122,7 @@ export default function CreateRideScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 70 }]}>
         <View style={styles.form}>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Start Location</Text>
