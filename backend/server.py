@@ -234,6 +234,7 @@ async def get_rides(start_location: Optional[str] = None, destination: Optional[
             "creator_id": ride["creator_id"],
             "creator_name": ride["creator_name"],
             "creator_phone": ride["creator_phone"],
+            "creator_gender": ride.get("creator_gender"),
             "start_location": ride["start_location"],
             "destination": ride["destination"],
             "date": ride["date"],
@@ -241,7 +242,9 @@ async def get_rides(start_location: Optional[str] = None, destination: Optional[
             "available_seats": ride["available_seats"],
             "total_seats": ride["total_seats"],
             "price_per_seat": ride["price_per_seat"],
-            "status": ride["status"]
+            "status": ride["status"],
+            "women_only": ride.get("women_only", False),
+            "is_women_driver": ride.get("creator_gender") == "Female"
         })
     
     return result
@@ -259,38 +262,60 @@ async def join_ride(ride_id: str, join_data: JoinRide, token: str):
     if ride["creator_id"] == str(user["_id"]):
         raise HTTPException(status_code=400, detail="Cannot join your own ride")
     
-    # Check if already joined
+    # Validate 15-minute rule
+    from datetime import datetime
+    try:
+        # Parse ride date and time
+        ride_datetime_str = f"{ride['date']} {ride['time']}"
+        # Try different formats
+        for fmt in ["%d/%m/%Y %I:%M %p", "%d/%m/%Y %H:%M", "%Y-%m-%d %I:%M %p", "%Y-%m-%d %H:%M"]:
+            try:
+                ride_datetime = datetime.strptime(ride_datetime_str, fmt)
+                break
+            except:
+                continue
+        else:
+            # If no format matched, skip validation
+            ride_datetime = datetime.utcnow() + timedelta(hours=1)
+        
+        # Check if ride is at least 15 minutes away
+        time_until_ride = ride_datetime - datetime.now()
+        if time_until_ride.total_seconds() < 900:  # 900 seconds = 15 minutes
+            raise HTTPException(status_code=400, detail="Ride requests must be made at least 15 minutes before ride start time")
+    except Exception as e:
+        # If parsing fails, allow the request (backward compatibility)
+        pass
+    
+    # Check if already requested/joined
     existing_booking = await db.bookings.find_one({
         "ride_id": ride_id,
         "user_id": str(user["_id"]),
-        "status": "confirmed"
+        "status": {"$in": ["pending", "accepted"]}
     })
     if existing_booking:
-        raise HTTPException(status_code=400, detail="Already joined this ride")
+        if existing_booking["status"] == "pending":
+            raise HTTPException(status_code=400, detail="Request already pending")
+        else:
+            raise HTTPException(status_code=400, detail="Already joined this ride")
     
-    # Check available seats
+    # Check available seats (for pending requests, we still check)
     if ride["available_seats"] < join_data.seats:
         raise HTTPException(status_code=400, detail="Not enough seats available")
     
-    # Create booking
+    # Create booking with pending status
     booking_doc = {
         "ride_id": ride_id,
         "user_id": str(user["_id"]),
         "user_name": user["name"],
         "user_phone": user["phone"],
+        "user_gender": user.get("gender"),
         "seats_booked": join_data.seats,
-        "status": "confirmed",
+        "status": "pending",
         "created_at": datetime.utcnow()
     }
     await db.bookings.insert_one(booking_doc)
     
-    # Update ride seats
-    await db.rides.update_one(
-        {"_id": ObjectId(ride_id)},
-        {"$inc": {"available_seats": -join_data.seats}}
-    )
-    
-    return {"message": "Successfully joined the ride"}
+    return {"message": "Ride request sent successfully. Waiting for driver approval."}
 
 @app.get("/api/my-rides")
 async def get_my_rides(token: str):
