@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   joinButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.primary,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   joinButtonText: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 16,
     fontWeight: 'bold',
   },
