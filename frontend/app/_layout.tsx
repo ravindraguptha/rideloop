@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stack } from 'expo-router';
 import { AuthProvider } from '../contexts/AuthContext';
+import Toast from 'react-native-toast-message';
 
 export default function RootLayout() {
   return (
@@ -9,6 +10,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="(tabs)" />
       </Stack>
+      <Toast />
     </AuthProvider>
   );
 }
