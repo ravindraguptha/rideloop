@@ -148,7 +148,7 @@ class RideLoopTester:
         
         # Test 2: Invalid password
         invalid_login = {
-            "phone": f"987654{timestamp[-4:]}",
+            "phone": self.user1_phone,
             "password": "wrongpassword"
         }
         
