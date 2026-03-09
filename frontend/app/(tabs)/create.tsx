@@ -38,12 +38,20 @@ export default function CreateRideScreen() {
 
   const handleCreateRide = async () => {
     if (!date || !time || !seats || !price) {
-      Alert.alert('Error', 'Please fill all fields');
+      Toast.show({
+        type: 'error',
+        text1: 'Missing Information',
+        text2: 'Please fill all fields',
+      });
       return;
     }
 
     if (startLocation === destination) {
-      Alert.alert('Error', 'Start location and destination cannot be the same');
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Route',
+        text2: 'Start location and destination cannot be the same',
+      });
       return;
     }
 
@@ -51,12 +59,20 @@ export default function CreateRideScreen() {
     const priceNum = parseFloat(price);
 
     if (isNaN(seatsNum) || seatsNum < 1 || seatsNum > 8) {
-      Alert.alert('Error', 'Please enter valid number of seats (1-8)');
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Seats',
+        text2: 'Please enter valid number of seats (1-8)',
+      });
       return;
     }
 
     if (isNaN(priceNum) || priceNum < 0) {
-      Alert.alert('Error', 'Please enter valid price');
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Price',
+        text2: 'Please enter valid price',
+      });
       return;
     }
 
@@ -76,24 +92,32 @@ export default function CreateRideScreen() {
       });
 
       if (response.ok) {
-        Alert.alert('Success', 'Ride created successfully!', [
-          {
-            text: 'OK',
-            onPress: () => {
-              setDate('');
-              setTime('');
-              setSeats('');
-              setPrice('');
-              router.push('/(tabs)/dashboard');
-            },
-          },
-        ]);
+        Toast.show({
+          type: 'success',
+          text1: 'Success!',
+          text2: 'Ride created successfully',
+        });
+        setDate('');
+        setTime('');
+        setSeats('');
+        setPrice('');
+        setTimeout(() => {
+          router.push('/(tabs)/dashboard');
+        }, 1000);
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.detail || 'Failed to create ride');
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: error.detail || 'Failed to create ride',
+        });
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to create ride');
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to create ride',
+      });
     } finally {
       setLoading(false);
     }
