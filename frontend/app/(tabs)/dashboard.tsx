@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Constants from 'expo-constants';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const API_URL = Constants.expoConfig?.extra?.EXPO_BACKEND_URL || '';
 
