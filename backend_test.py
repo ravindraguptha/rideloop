@@ -130,7 +130,7 @@ class RideLoopTester:
         
         # Test 1: Valid login
         login_data = {
-            "phone": "9876543210",
+            "phone": f"987654{timestamp[-4:]}",
             "password": "securepass123"
         }
         
