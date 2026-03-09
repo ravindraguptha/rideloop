@@ -189,10 +189,6 @@ async def get_profile(token: str):
 async def create_ride(ride: RideCreate, token: str):
     user = await get_current_user(token)
     
-    # Check if user's role is Driver
-    if user.get("role") != "Driver":
-        raise HTTPException(status_code=400, detail="Only drivers can create rides")
-    
     ride_doc = {
         "creator_id": str(user["_id"]),
         "creator_name": user["name"],
