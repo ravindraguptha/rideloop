@@ -52,6 +52,7 @@ export default function CreateRideScreen() {
   const [loading, setLoading] = useState(false);
   const { token } = useAuth();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const handleCreateRide = async () => {
     if (!date || !time || !seats || !price) {
