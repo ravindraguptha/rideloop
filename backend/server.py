@@ -164,7 +164,11 @@ async def login(credentials: UserLogin):
         "user": {
             "id": str(user["_id"]),
             "name": user["name"],
-            "phone": user["phone"]
+            "phone": user["phone"],
+            "gender": user.get("gender"),
+            "role": user.get("role", "Passenger"),
+            "women_only_preference": user.get("women_only_preference", False),
+            "kyc_verified": user.get("kyc_verified", False)
         }
     }
 
@@ -174,7 +178,11 @@ async def get_profile(token: str):
     return {
         "id": str(user["_id"]),
         "name": user["name"],
-        "phone": user["phone"]
+        "phone": user["phone"],
+        "gender": user.get("gender"),
+        "role": user.get("role", "Passenger"),
+        "women_only_preference": user.get("women_only_preference", False),
+        "kyc_verified": user.get("kyc_verified", False)
     }
 
 @app.post("/api/rides")
