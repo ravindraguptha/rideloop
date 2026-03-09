@@ -61,6 +61,25 @@ class UserLogin(BaseModel):
     phone: str
     password: str
 
+class ProfileUpdate(BaseModel):
+    name: Optional[str] = None
+    gender: Optional[str] = None
+    role: Optional[str] = None
+    women_only_preference: Optional[bool] = None
+
+class VehicleCreate(BaseModel):
+    vehicle_type: str
+    vehicle_number: str
+    vehicle_model: str
+    vehicle_color: str
+
+class VehicleUpdate(BaseModel):
+    vehicle_type: Optional[str] = None
+    vehicle_number: Optional[str] = None
+    vehicle_model: Optional[str] = None
+    vehicle_color: Optional[str] = None
+    accept_requests: Optional[bool] = None
+
 class RideCreate(BaseModel):
     start_location: str
     destination: str
