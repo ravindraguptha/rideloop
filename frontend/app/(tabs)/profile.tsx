@@ -5,9 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function ProfileScreen() {
   const { user, logout } = useAuth();
@@ -31,8 +33,18 @@ export default function ProfileScreen() {
     );
   };
 
+  const menuItems = [
+    { id: 'edit', title: 'Edit Profile', icon: 'person-outline', route: '/edit-profile' },
+    { id: 'kyc', title: 'KYC Verification', icon: 'shield-checkmark-outline', route: '/kyc' },
+    { id: 'vehicles', title: 'My Vehicles', icon: 'car-outline', route: '/vehicles', showForDriver: true },
+    { id: 'trips', title: 'My Trips', icon: 'list-outline', route: '/(tabs)/dashboard' },
+    { id: 'earnings', title: 'Earnings', icon: 'wallet-outline', route: '/earnings', showForDriver: true },
+    { id: 'settings', title: 'Settings', icon: 'settings-outline', route: '/settings' },
+    { id: 'support', title: 'Support', icon: 'help-circle-outline', route: '/support' },
+  ];
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.profileCard}>
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>
@@ -43,26 +55,54 @@ export default function ProfileScreen() {
         <Text style={styles.name}>{user?.name}</Text>
         <Text style={styles.phone}>{user?.phone}</Text>
 
+        {user?.kyc_verified && (
+          <View style={styles.kycBadge}>
+            <Ionicons name="shield-checkmark" size={16} color="#4CAF50" />
+            <Text style={styles.kycText}>KYC Verified</Text>
+          </View>
+        )}
+
         <View style={styles.infoSection}>
           <View style={styles.infoCard}>
-            <Text style={styles.infoLabel}>Member Since</Text>
-            <Text style={styles.infoValue}>July 2025</Text>
+            <Text style={styles.infoLabel}>Role</Text>
+            <Text style={styles.infoValue}>{user?.role || 'Passenger'}</Text>
           </View>
+          {user?.gender && (
+            <View style={styles.infoCard}>
+              <Text style={styles.infoLabel}>Gender</Text>
+              <Text style={styles.infoValue}>{user?.gender}</Text>
+            </View>
+          )}
         </View>
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>About RideLoop</Text>
-        <Text style={styles.sectionText}>
-          RideLoop is your smart ride-sharing companion for Hyderabad.
-          Connect with fellow travelers, save money, and reduce traffic congestion.
-        </Text>
+      <View style={styles.menuSection}>
+        {menuItems.map((item) => {
+          // Filter menu items based on role
+          if (item.showForDriver && user?.role !== 'Driver') {
+            return null;
+          }
+
+          return (
+            <TouchableOpacity
+              key={item.id}
+              style={styles.menuItem}
+              onPress={() => router.push(item.route as any)}
+            >
+              <View style={styles.menuItemLeft}>
+                <Ionicons name={item.icon as any} size={24} color="#4CAF50" />
+                <Text style={styles.menuItemText}>{item.title}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={24} color="#999" />
+            </TouchableOpacity>
+          );
+        })}
       </View>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutButtonText}>Logout</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
