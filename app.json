@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "rideLoop",
+    "slug": "rideloop",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "rideloop",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "extra": {
+      "EXPO_BACKEND_URL": "https://rideloop-app.preview.emergentagent.com",
+      "router": {},
+      "eas": {
+        "projectId": "4d418851-3f42-4e27-8ad1-fcf646926c45"
+      }
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+      "foregroundImage": "./assets/images/icon.png",
+      "backgroundColor": "#ffffff"
+       },
+      "edgeToEdgeEnabled": true,
+      "package": "com.vaishali_123.rideloop"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#000000"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
